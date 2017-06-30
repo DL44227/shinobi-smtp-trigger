@@ -133,10 +133,12 @@ foreach my $camid (keys %camips)
     # unconsidered
     if ($now - $triggerhistory > $vidtsend)
     {
+      $debug && print "not considered - too old.\n";
       next;
     }
 
-    my $stm = "select count(timestamp) from triggers where timestamp >= '$vidts' and timestamp <= '$vidtsend';";
+    my $stm = "select count(timestamp) from triggers where camip = '$camip' " .
+              "and timestamp >= '$vidts' and timestamp <= '$vidtsend';";
     # $debug && print "stm=$stm ";
     my $q = $dbh->prepare($stm);
     $q->execute();
